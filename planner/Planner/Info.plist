@@ -18,6 +18,10 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Planner uses your microphone to let you add tasks by speaking.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Planner uses speech recognition to turn what you say into a task.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

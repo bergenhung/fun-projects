@@ -23,7 +23,7 @@ struct AddEditTaskView: View {
         let fallbackHour = min(max(Calendar.current.component(.hour, from: Date()), GridConfig.startHour), GridConfig.endHour - 1)
         _hour = State(initialValue: task?.startHour ?? defaultHour ?? fallbackHour)
         _duration = State(initialValue: task?.durationMinutes ?? 60)
-        _reminderOffset = State(initialValue: task?.reminderMinutesBefore ?? 30)
+        _reminderOffset = State(initialValue: task?.reminderMinutesBefore ?? 15)
     }
 
     var body: some View {
@@ -91,6 +91,8 @@ struct AddEditTaskView: View {
             editingTask.startHour = hour
             editingTask.durationMinutes = duration
             editingTask.reminderMinutesBefore = reminderOffset
+            editingTask.checkInSent = false
+            NotificationScheduler.reschedule(for: editingTask)
         } else {
             let newTask = PlannerTask(
                 title: trimmedTitle,
@@ -101,12 +103,14 @@ struct AddEditTaskView: View {
                 reminderMinutesBefore: reminderOffset
             )
             modelContext.insert(newTask)
+            NotificationScheduler.reschedule(for: newTask)
         }
         dismiss()
     }
 
     private func delete() {
         if let editingTask {
+            NotificationScheduler.cancelAll(for: editingTask)
             modelContext.delete(editingTask)
         }
         dismiss()

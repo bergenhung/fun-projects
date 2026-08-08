@@ -32,3 +32,5 @@ targets:
         UILaunchScreen: {}
         UIApplicationSceneManifest:
           UIApplicationSupportsMultipleScenes: false
+        NSMicrophoneUsageDescription: "Planner uses your microphone to let you add tasks by speaking."
+        NSSpeechRecognitionUsageDescription: "Planner uses speech recognition to turn what you say into a task."

@@ -14,18 +14,19 @@ A native, multiplatform (iPhone + Mac) daily planner built with Swift, SwiftUI, 
 
 ## V1 Feature Set
 
-1. **Hourly grid view** — Day displayed as a vertical grid, one row per hour (e.g., 6 AM–10 PM, configurable). Tasks appear as blocks in their scheduled hour slot, similar to a calendar day view.
-2. **Voice-activated task entry** — Tap a mic button (or hands-free trigger — see note below), speak a task, app transcribes it and creates a task. Should parse a spoken time if mentioned (e.g., "meeting at 3pm") and place it in the right grid slot; otherwise ask which hour or default to next open slot.
-3. **Default reminder** — Every task automatically gets a reminder notification 30 minutes before its scheduled time, unless the user changes it.
-4. **Completion check-in** — 5 minutes after a task's scheduled time passes, the app sends a notification asking "Did you complete [task]?" with Yes/No actions. If "Yes," the task is marked complete and shown with strikethrough in the grid. If "No" or ignored, task stays open.
-5. Manual add/edit/delete task (typed, as a fallback to voice)
-6. Mark complete/incomplete manually (tap task, or from the check-in notification)
+1. **Hourly grid view** — Day displayed as a vertical grid, one row per hour (default window 7 AM–7 PM, configurable). Tasks appear as blocks in their scheduled hour slot, similar to a calendar day view.
+2. **Day navigation** — Swipe or scroll horizontally to move to the day before or after the currently viewed day (so from Today you can go back to Yesterday or forward to Tomorrow, and keep going from there). Current day is visually indicated (e.g., "Today" label or highlight) regardless of which day is being viewed.
+3. **Jump to date** — A date picker (calendar icon in toolbar) lets the user jump directly to any specific date instead of scrolling day by day.
+4. **Voice-activated task entry** — Tap a mic button (or hands-free trigger — see note below), speak a task, app transcribes it and creates a task. Should parse a spoken time if mentioned (e.g., "meeting at 3pm") and place it in the right grid slot; otherwise ask which hour or default to next open slot.
+5. **Default reminder** — Every task automatically gets a reminder notification 15 minutes before its scheduled time, unless the user changes it.
+6. **Completion check-in** — 5 minutes after a task's scheduled time passes, the app sends a notification asking "Did you complete [task]?" with Yes/No actions. If "Yes," the task is marked complete and shown with strikethrough in the grid. If "No" or ignored, task stays open.
+7. Manual add/edit/delete task (typed, as a fallback to voice)
+8. Mark complete/incomplete manually (tap task, or from the check-in notification)
 
 ## Explicitly OUT of scope for v1
-- Recurring tasks
-- Multi-day/week grid view (v1 is single-day focus, Today by default)
+- Multi-day/week *grid* view — day navigation (scroll/swipe day-to-day, jump to date) is in scope, but seeing multiple days side-by-side at once is not
 - Full hands-free "Hey Siri"-style always-listening activation (see note below)
-- Natural language for complex recurring phrases ("every weekday at 9")
+- Natural language for complex recurring phrases ("every weekday at 9" spoken aloud) — recurring tasks are supported (see Milestones), but set up manually, not via voice, in v1
 - Collaboration/sharing
 
 ## Important note on "voice activated"
@@ -44,21 +45,31 @@ Task
 - scheduledDate: Date        // the day
 - startHour: Int             // hour slot, e.g. 14 for 2 PM
 - durationMinutes: Int       // default 60, for grid block sizing
-- reminderMinutesBefore: Int // default 30
+- reminderMinutesBefore: Int // default 15
 - isCompleted: Bool
 - checkInSent: Bool          // tracks whether the 5-min-after prompt fired
 - createdAt: Date
+- recurrenceRule: RecurrenceRule?  // nil = one-off task
+- recurrenceParentId: UUID?  // links generated instances back to the original recurring task
+```
+
+```
+RecurrenceRule (enum or struct)
+- frequency: daily | weekly | weekdays | custom(days: [Weekday])
+- endDate: Date?   // nil = repeats indefinitely
 ```
 
 ## Screens
 1. **Hourly Grid (main view)**
-   - Vertical scroll, one row per hour, current hour highlighted
+   - Vertical scroll, one row per hour, current hour highlighted (only when viewing today)
+   - Horizontal swipe/scroll to move between days (yesterday, today, tomorrow, and beyond in either direction)
+   - Date picker icon in toolbar to jump directly to a specific date
    - Task blocks placed in their hour row, sized roughly by duration
    - Completed tasks shown with strikethrough
    - Mic button (toolbar or floating) for voice entry
    - "+" button for manual entry (fallback)
 2. **Add/Edit Task (sheet)**
-   - Title, notes, date/hour picker, duration, reminder offset (default 30 min, editable)
+   - Title, notes, date/hour picker, duration, reminder offset (default 15 min, editable)
    - Save / Cancel
 3. **Voice entry flow**
    - Mic button → recording indicator → transcribed text shown for confirmation → user confirms or edits → task created
@@ -72,11 +83,13 @@ Task
 ## Milestones (build in this order)
 1. **Project setup** — Multiplatform SwiftData project, compiles on iOS + Mac.
 2. **Manual CRUD + hourly grid UI** — Add/edit/delete tasks by typing, displayed correctly in the hour grid. No voice, no notifications yet.
-3. **Reminder notifications** — 30-min-before reminder fires correctly (test with a task scheduled a few minutes out).
-4. **Completion check-in notifications** — 5-min-after prompt fires, Yes/No actions correctly update task state and strikethrough.
-5. **Voice entry (tap-to-talk)** — Mic button, transcription, confirm-and-create flow.
-6. **CloudKit sync** — Confirm tasks sync between iPhone and Mac.
-7. **Polish** — Empty states, permission-request flows (microphone + notifications), visual pass.
+3. **Day navigation + jump to date** — Swipe/scroll to adjacent days (before and after today, and beyond), plus a date picker to jump directly to any date. Confirm tasks load correctly for whichever day is in view.
+4. **Reminder notifications** — 15-min-before reminder fires correctly (test with a task scheduled a few minutes out).
+5. **Completion check-in notifications** — 5-min-after prompt fires, Yes/No actions correctly update task state and strikethrough.
+6. **Recurring tasks** — Add recurrence options to the Add/Edit Task screen (daily, weekly, weekdays, custom). On save, generate task instances per `RecurrenceRule`. Editing/deleting should ask "this occurrence only" vs. "all future occurrences."
+7. **Voice entry (tap-to-talk)** — Mic button, transcription, confirm-and-create flow.
+8. **CloudKit sync** — Confirm tasks sync between iPhone and Mac.
+9. **Polish** — Empty states, permission-request flows (microphone + notifications), visual pass.
 
 ## Permissions you'll need to request
 - Microphone access (`NSMicrophoneUsageDescription`)

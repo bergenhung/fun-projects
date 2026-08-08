@@ -1,18 +1,20 @@
 import Foundation
 import SwiftData
 
+// Every stored property has an inline default, as required for a SwiftData
+// model to be CloudKit-syncable (see Milestone 6 notes in CLAUDE.md).
 @Model
 final class PlannerTask: Identifiable {
-    var id: UUID
-    var title: String
+    var id: UUID = UUID()
+    var title: String = ""
     var notes: String?
-    var scheduledDate: Date
-    var startHour: Int
-    var durationMinutes: Int
-    var reminderMinutesBefore: Int
-    var isCompleted: Bool
-    var checkInSent: Bool
-    var createdAt: Date
+    var scheduledDate: Date = Date()
+    var startHour: Int = 0
+    var durationMinutes: Int = 60
+    var reminderMinutesBefore: Int = 15
+    var isCompleted: Bool = false
+    var checkInSent: Bool = false
+    var createdAt: Date = Date()
 
     init(
         title: String,
@@ -20,7 +22,7 @@ final class PlannerTask: Identifiable {
         scheduledDate: Date,
         startHour: Int,
         durationMinutes: Int = 60,
-        reminderMinutesBefore: Int = 30,
+        reminderMinutesBefore: Int = 15,
         isCompleted: Bool = false,
         checkInSent: Bool = false
     ) {

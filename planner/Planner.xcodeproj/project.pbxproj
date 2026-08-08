@@ -8,18 +8,28 @@
 
 /* Begin PBXBuildFile section */
 		058A02788FE5D40676F1C6D7 /* PlannerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED84978890594A2D1219F28 /* PlannerApp.swift */; };
+		0F61DFDBC7E28FB2C38FAE37 /* NotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D6FFF9E46A111C4F8C816A /* NotificationScheduler.swift */; };
+		0FA91B42E864DBFD2E15E611 /* VoiceEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE5963892D7FC2EAA808492 /* VoiceEntryView.swift */; };
 		14DF03A0530639598E14F94F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90D25C273430A6E96B130EFE /* Assets.xcassets */; };
+		17E300356AC592862E97EC5C /* NotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D6FFF9E46A111C4F8C816A /* NotificationScheduler.swift */; };
 		20D7B6690B4B9C64FB038640 /* PlannerTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A43BBFCDDF7E6692FF9663 /* PlannerTask.swift */; };
+		21D93D7938DA8DFAD405201A /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA75B55E7A192BDBB4CD75F /* SpeechRecognizer.swift */; };
 		24183C4905B5B54E670E3143 /* TaskLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC479DBEA00E7C604BAEF26 /* TaskLayout.swift */; };
 		2B3F1BEBC329C45D8080824E /* PlannerTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A43BBFCDDF7E6692FF9663 /* PlannerTask.swift */; };
 		2C38C503E843F62F67B46A93 /* PlannerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED84978890594A2D1219F28 /* PlannerApp.swift */; };
 		2D86412DDEE624386A0D8EEC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5727BE30EBC732676F438DDE /* ContentView.swift */; };
 		498D09A12F02B1CAC0B7795F /* GridConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24F041095C16C1B96FAB32F /* GridConfig.swift */; };
+		4D7C8A32616499B1BA669655 /* VoiceEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE5963892D7FC2EAA808492 /* VoiceEntryView.swift */; };
 		53E91A1556DCB68DFE66A774 /* GridConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24F041095C16C1B96FAB32F /* GridConfig.swift */; };
+		55C7C63E5AB370B3424A5FE1 /* PlannerNotificationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94DBA3EF43007AFBEA874BE /* PlannerNotificationDelegate.swift */; };
+		5C5FE5784EF8FD993186463E /* SpokenTaskParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53428E695F0D450F0F474015 /* SpokenTaskParser.swift */; };
 		5F50CB66CD5FA103DF84E750 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5727BE30EBC732676F438DDE /* ContentView.swift */; };
+		6BEF1CAC21AE9753219D0902 /* PlannerNotificationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94DBA3EF43007AFBEA874BE /* PlannerNotificationDelegate.swift */; };
+		75F335A344B7C33B420E717F /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA75B55E7A192BDBB4CD75F /* SpeechRecognizer.swift */; };
 		7EAD12D6079C0625473A36A7 /* TaskBlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B5580F24309830A5A8CD77 /* TaskBlockView.swift */; };
 		864A942AC997FCA21BC538E8 /* AddEditTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47FD685E23CA883771FA12D /* AddEditTaskView.swift */; };
 		89C15140895CB2AB5EDD026B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90D25C273430A6E96B130EFE /* Assets.xcassets */; };
+		A3F528FBC120E143DE8B1050 /* SpokenTaskParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53428E695F0D450F0F474015 /* SpokenTaskParser.swift */; };
 		ACD813380304C0FD74C2C77D /* HourlyGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F0C4E2BF6E19F4B1AC839A /* HourlyGridView.swift */; };
 		B1A1D3B7A38D064D1DAFFB9A /* HourlyGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F0C4E2BF6E19F4B1AC839A /* HourlyGridView.swift */; };
 		D630BB39864EC1DB6A60D527 /* TaskBlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B5580F24309830A5A8CD77 /* TaskBlockView.swift */; };
@@ -30,16 +40,21 @@
 /* Begin PBXFileReference section */
 		2D56D122C3E0D0E440AA77F2 /* Planner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Planner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52A43BBFCDDF7E6692FF9663 /* PlannerTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlannerTask.swift; sourceTree = "<group>"; };
+		53428E695F0D450F0F474015 /* SpokenTaskParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpokenTaskParser.swift; sourceTree = "<group>"; };
 		5727BE30EBC732676F438DDE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		90D25C273430A6E96B130EFE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9BA75B55E7A192BDBB4CD75F /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
 		A24F041095C16C1B96FAB32F /* GridConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridConfig.swift; sourceTree = "<group>"; };
+		A94DBA3EF43007AFBEA874BE /* PlannerNotificationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlannerNotificationDelegate.swift; sourceTree = "<group>"; };
 		B6F0C4E2BF6E19F4B1AC839A /* HourlyGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyGridView.swift; sourceTree = "<group>"; };
-		BBC4C733710FC544703401DB /* Planner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Planner.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BBC4C733710FC544703401DB /* Planner.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Planner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2B5580F24309830A5A8CD77 /* TaskBlockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskBlockView.swift; sourceTree = "<group>"; };
+		CBE5963892D7FC2EAA808492 /* VoiceEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceEntryView.swift; sourceTree = "<group>"; };
 		D379297247C4C4D8E8858E69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DEC479DBEA00E7C604BAEF26 /* TaskLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskLayout.swift; sourceTree = "<group>"; };
 		EED84978890594A2D1219F28 /* PlannerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlannerApp.swift; sourceTree = "<group>"; };
 		F47FD685E23CA883771FA12D /* AddEditTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditTaskView.swift; sourceTree = "<group>"; };
+		F6D6FFF9E46A111C4F8C816A /* NotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScheduler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -47,6 +62,7 @@
 			isa = PBXGroup;
 			children = (
 				A24F041095C16C1B96FAB32F /* GridConfig.swift */,
+				53428E695F0D450F0F474015 /* SpokenTaskParser.swift */,
 				DEC479DBEA00E7C604BAEF26 /* TaskLayout.swift */,
 			);
 			path = Support;
@@ -60,6 +76,14 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		80FB4ABC9343FF4C893EC8E2 /* Voice */ = {
+			isa = PBXGroup;
+			children = (
+				9BA75B55E7A192BDBB4CD75F /* SpeechRecognizer.swift */,
+			);
+			path = Voice;
+			sourceTree = "<group>";
+		};
 		8A24130474E84AC40E415ED0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -67,8 +91,18 @@
 				5727BE30EBC732676F438DDE /* ContentView.swift */,
 				B6F0C4E2BF6E19F4B1AC839A /* HourlyGridView.swift */,
 				C2B5580F24309830A5A8CD77 /* TaskBlockView.swift */,
+				CBE5963892D7FC2EAA808492 /* VoiceEntryView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		8C21B9E68BBA841B7E19840F /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				F6D6FFF9E46A111C4F8C816A /* NotificationScheduler.swift */,
+				A94DBA3EF43007AFBEA874BE /* PlannerNotificationDelegate.swift */,
+			);
+			path = Notifications;
 			sourceTree = "<group>";
 		};
 		8FBBD05AB8305B6D990D46DF /* Products */ = {
@@ -87,8 +121,10 @@
 				D379297247C4C4D8E8858E69 /* Info.plist */,
 				EED84978890594A2D1219F28 /* PlannerApp.swift */,
 				588E6BD0B6A88187D7B63F37 /* Models */,
+				8C21B9E68BBA841B7E19840F /* Notifications */,
 				3B8CBAB1BF6A1471D401BB2C /* Support */,
 				8A24130474E84AC40E415ED0 /* Views */,
+				80FB4ABC9343FF4C893EC8E2 /* Voice */,
 			);
 			path = Planner;
 			sourceTree = "<group>";
@@ -147,7 +183,9 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 2660;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+				};
 			};
 			buildConfigurationList = 353E30D3C5AA0D0900B39F90 /* Build configuration list for PBXProject "Planner" */;
 			developmentRegion = en;
@@ -197,10 +235,15 @@
 				2D86412DDEE624386A0D8EEC /* ContentView.swift in Sources */,
 				498D09A12F02B1CAC0B7795F /* GridConfig.swift in Sources */,
 				B1A1D3B7A38D064D1DAFFB9A /* HourlyGridView.swift in Sources */,
+				0F61DFDBC7E28FB2C38FAE37 /* NotificationScheduler.swift in Sources */,
 				058A02788FE5D40676F1C6D7 /* PlannerApp.swift in Sources */,
+				6BEF1CAC21AE9753219D0902 /* PlannerNotificationDelegate.swift in Sources */,
 				2B3F1BEBC329C45D8080824E /* PlannerTask.swift in Sources */,
+				75F335A344B7C33B420E717F /* SpeechRecognizer.swift in Sources */,
+				A3F528FBC120E143DE8B1050 /* SpokenTaskParser.swift in Sources */,
 				7EAD12D6079C0625473A36A7 /* TaskBlockView.swift in Sources */,
 				24183C4905B5B54E670E3143 /* TaskLayout.swift in Sources */,
+				0FA91B42E864DBFD2E15E611 /* VoiceEntryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -212,10 +255,15 @@
 				5F50CB66CD5FA103DF84E750 /* ContentView.swift in Sources */,
 				53E91A1556DCB68DFE66A774 /* GridConfig.swift in Sources */,
 				ACD813380304C0FD74C2C77D /* HourlyGridView.swift in Sources */,
+				17E300356AC592862E97EC5C /* NotificationScheduler.swift in Sources */,
 				2C38C503E843F62F67B46A93 /* PlannerApp.swift in Sources */,
+				55C7C63E5AB370B3424A5FE1 /* PlannerNotificationDelegate.swift in Sources */,
 				20D7B6690B4B9C64FB038640 /* PlannerTask.swift in Sources */,
+				21D93D7938DA8DFAD405201A /* SpeechRecognizer.swift in Sources */,
+				5C5FE5784EF8FD993186463E /* SpokenTaskParser.swift in Sources */,
 				D630BB39864EC1DB6A60D527 /* TaskBlockView.swift in Sources */,
 				DC9FDA69267346BF1BEE79F7 /* TaskLayout.swift in Sources */,
+				4D7C8A32616499B1BA669655 /* VoiceEntryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,11 +276,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = KX4K7Q428B;
 				INFOPLIST_FILE = Planner/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Weekday Planner";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -250,10 +295,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = Planner/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Weekday Planner";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -300,12 +342,10 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -327,7 +367,6 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 6.0;
@@ -369,12 +408,10 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -389,7 +426,6 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 6.0;
@@ -402,11 +438,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = KX4K7Q428B;
 				INFOPLIST_FILE = Planner/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Weekday Planner";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -424,10 +457,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = Planner/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Weekday Planner";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",

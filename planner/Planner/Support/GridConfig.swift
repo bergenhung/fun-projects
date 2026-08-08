@@ -1,8 +1,8 @@
 import Foundation
 
 enum GridConfig {
-    static let startHour = 6
-    static let endHour = 22
+    static let startHour = 7
+    static let endHour = 19
     static let hourHeight: CGFloat = 64
     static let hourGutterWidth: CGFloat = 52
 
@@ -26,5 +26,19 @@ enum GridConfig {
 
     static func reminderLabel(_ minutes: Int) -> String {
         minutes == 0 ? "At start time" : "\(minutes) min before"
+    }
+
+    /// The earliest hour at or after `hour` with no existing task, wrapping back
+    /// to the start of the grid if the rest of the day is full.
+    static func nextOpenHour(for tasks: [PlannerTask], from hour: Int = Calendar.current.component(.hour, from: Date())) -> Int {
+        let occupied = Set(tasks.map(\.startHour))
+        let clampedStart = min(max(hour, startHour), endHour - 1)
+        if let open = (clampedStart..<endHour).first(where: { !occupied.contains($0) }) {
+            return open
+        }
+        if let open = (startHour..<clampedStart).first(where: { !occupied.contains($0) }) {
+            return open
+        }
+        return clampedStart
     }
 }
