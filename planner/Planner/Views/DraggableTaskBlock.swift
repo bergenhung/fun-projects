@@ -45,6 +45,7 @@ struct DraggableTaskBlock: View {
     var body: some View {
         TaskBlockView(
             task: task,
+            compact: previewHeight < TaskBlockView.twoLineMinHeight,
             onToggleComplete: onToggleComplete,
             onEdit: onEdit,
             onDelete: onDelete,
