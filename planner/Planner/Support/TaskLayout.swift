@@ -12,13 +12,13 @@ struct TaskLayout: Identifiable {
 /// standard interval-graph-coloring approach used by calendar day views.
 enum TaskLayoutEngine {
     static func layout(for tasks: [PlannerTask]) -> [TaskLayout] {
+        func startMinutes(_ t: PlannerTask) -> Int { t.startHour * 60 + t.startMinute }
+        func endMinutes(_ t: PlannerTask) -> Int { startMinutes(t) + max(t.durationMinutes, 1) }
+
         let sorted = tasks.sorted {
-            if $0.startHour != $1.startHour { return $0.startHour < $1.startHour }
+            if startMinutes($0) != startMinutes($1) { return startMinutes($0) < startMinutes($1) }
             return $0.durationMinutes < $1.durationMinutes
         }
-
-        func startMinutes(_ t: PlannerTask) -> Int { t.startHour * 60 }
-        func endMinutes(_ t: PlannerTask) -> Int { t.startHour * 60 + max(t.durationMinutes, 1) }
 
         var clusters: [[PlannerTask]] = []
         var currentCluster: [PlannerTask] = []
