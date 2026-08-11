@@ -14,7 +14,7 @@ A native, multiplatform (iPhone + Mac) daily planner built with Swift, SwiftUI, 
 
 ## V1 Feature Set
 
-1. **Hourly grid view** — Day displayed as a vertical grid, one row per hour (default window 7 AM–7 PM, configurable). Tasks appear as blocks in their scheduled hour slot, similar to a calendar day view.
+1. **Hourly grid view** — Day displayed as a vertical grid, one row per hour (default window 7 AM–7 PM, configurable). Tasks appear as blocks positioned by their scheduled start time, similar to a calendar day view. Start time has 15-minute granularity (e.g. 9:15 AM, not just 9:00 or 10:00) — the grid shows faint quarter-hour tick marks within each hour row as a visual reference for off-the-hour placement.
 2. **Day navigation** — Swipe or scroll horizontally to move to the day before or after the currently viewed day (so from Today you can go back to Yesterday or forward to Tomorrow, and keep going from there). Current day is visually indicated (e.g., "Today" label or highlight) regardless of which day is being viewed.
 3. **Jump to date** — A date picker (calendar icon in toolbar) lets the user jump directly to any specific date instead of scrolling day by day.
 4. **Voice-activated task entry** — Tap a mic button (or hands-free trigger — see note below), speak a task, app transcribes it and creates a task. Should parse a spoken time if mentioned (e.g., "meeting at 3pm") and place it in the right grid slot; otherwise ask which hour or default to next open slot.
@@ -22,6 +22,7 @@ A native, multiplatform (iPhone + Mac) daily planner built with Swift, SwiftUI, 
 6. **Completion check-in** — 5 minutes after a task's scheduled time passes, the app sends a notification asking "Did you complete [task]?" with Yes/No actions. If "Yes," the task is marked complete and shown with strikethrough in the grid. If "No" or ignored, task stays open.
 7. Manual add/edit/delete task (typed, as a fallback to voice)
 8. Mark complete/incomplete manually (tap task, or from the check-in notification)
+9. **Direct-manipulation editing on the grid** — drag a task block (its body) up or down to move it to a different start time, keeping its duration unchanged; drag the thin handle at its top or bottom edge to resize it (changes duration by moving the start or end time — the other end stays fixed). Both move and resize snap to 15-minute increments, matching the grid's start-time granularity. Works with touch (iPhone) and mouse/trackpad (Mac) via the same gesture, no platform-specific interaction needed. A drag on a one-off task commits immediately on release; a drag on a task that's part of a recurring series asks "this occurrence only" vs "this and future occurrences", the same choice the Add/Edit sheet's Save offers.
 
 ## Explicitly OUT of scope for v1
 - Multi-day/week *grid* view — day navigation (scroll/swipe day-to-day, jump to date) is in scope, but seeing multiple days side-by-side at once is not
@@ -41,10 +42,11 @@ There are two very different things this could mean, with very different build e
 Task
 - id: UUID
 - title: String
-- notes: String?
+- notes: String
 - scheduledDate: Date        // the day
 - startHour: Int             // hour slot, e.g. 14 for 2 PM
-- durationMinutes: Int       // default 60, for grid block sizing
+- startMinute: Int           // 0 | 15 | 30 | 45, minute within startHour
+- durationMinutes: Int       // default 60, for grid block sizing; 15-min minimum/increment
 - reminderMinutesBefore: Int // default 15
 - isCompleted: Bool
 - checkInSent: Bool          // tracks whether the 5-min-after prompt fired
@@ -65,18 +67,19 @@ RecurrenceRule (enum or struct)
    - Horizontal swipe/scroll to move between days (yesterday, today, tomorrow, and beyond in either direction)
    - Date picker icon in toolbar to jump directly to a specific date
    - Task blocks placed in their hour row, sized roughly by duration
+   - Task blocks are directly draggable: grab the body to move (same duration), grab the top/bottom edge to resize (changes duration)
    - Completed tasks shown with strikethrough
    - Mic button (toolbar or floating) for voice entry
    - "+" button for manual entry (fallback)
 2. **Add/Edit Task (sheet)**
-   - Title, notes, date/hour picker, duration, reminder offset (default 15 min, editable)
+   - Title, notes, date/hour/minute picker (minute in 15-min steps: :00/:15/:30/:45), duration (15-min steps starting at 15 min), reminder offset (default 15 min, editable)
    - Save / Cancel
 3. **Voice entry flow**
    - Mic button → recording indicator → transcribed text shown for confirmation → user confirms or edits → task created
 
 ## Notification Logic
-- On task creation: schedule a local notification for `startHour - reminderMinutesBefore`
-- On task creation: schedule a second local notification for `startHour + durationMinutes + 5min` — the completion check-in, with Yes/No actions
+- On task creation: schedule a local notification for `startHour:startMinute - reminderMinutesBefore`
+- On task creation: schedule a second local notification for `startHour:startMinute + durationMinutes + 5min` — the completion check-in, with Yes/No actions
 - If task is marked complete manually before the check-in fires, cancel the pending check-in notification
 - Handle notification actions via `UNUserNotificationCenterDelegate` to update the task's `isCompleted` state directly from Yes/No, without opening the app
 
@@ -90,6 +93,8 @@ RecurrenceRule (enum or struct)
 7. **Voice entry (tap-to-talk)** — Mic button, transcription, confirm-and-create flow.
 8. **CloudKit sync** — Confirm tasks sync between iPhone and Mac.
 9. **Polish** — Empty states, permission-request flows (microphone + notifications), visual pass.
+10. **Direct-manipulation editing** — Drag a task block to move it (same duration); drag its top/bottom edge to resize (changes duration, snapped to 15 min). Test with touch and with mouse/trackpad.
+11. **15-minute start-time granularity** — Add a minute picker (:00/:15/:30/:45) alongside the existing hour picker in the Add/Edit sheet and voice-entry review screen; grid positioning, drag-to-move/resize snapping, overlap-column detection, and notification scheduling all need to account for the minute, not just the hour.
 
 ## Permissions you'll need to request
 - Microphone access (`NSMicrophoneUsageDescription`)

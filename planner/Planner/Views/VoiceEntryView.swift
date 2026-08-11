@@ -6,11 +6,13 @@ struct VoiceEntryView: View {
     @Environment(\.dismiss) private var dismiss
 
     let existingTasks: [PlannerTask]
+    let targetDate: Date
 
     @StateObject private var recognizer = SpeechRecognizer()
     @State private var phase: Phase = .requestingPermission
     @State private var editedTitle = ""
     @State private var selectedHour = GridConfig.startHour
+    @State private var selectedMinute = 0
     @State private var errorMessage: String?
 
     private enum Phase {
@@ -78,11 +80,22 @@ struct VoiceEntryView: View {
             Section("Task") {
                 TextField("Title", text: $editedTitle)
             }
-            Section("Hour") {
+            Section("Time") {
                 Picker("Hour", selection: $selectedHour) {
                     ForEach(GridConfig.startHour..<GridConfig.endHour, id: \.self) { h in
                         Text(GridConfig.hourLabel(h)).tag(h)
                     }
+                }
+                Picker("Minute", selection: $selectedMinute) {
+                    ForEach(GridConfig.minuteOptions, id: \.self) { m in
+                        Text(String(format: ":%02d", m)).tag(m)
+                    }
+                }
+            }
+            if !Calendar.current.isDateInToday(targetDate) {
+                Section {
+                    Text("Creating for \(targetDate.formatted(.dateTime.weekday(.wide).month().day()))")
+                        .foregroundStyle(.secondary)
                 }
             }
             Section {
@@ -111,7 +124,17 @@ struct VoiceEntryView: View {
         recognizer.stopRecording()
         let parsed = SpokenTaskParser.parse(recognizer.transcript)
         editedTitle = parsed.title
-        selectedHour = parsed.hour ?? GridConfig.nextOpenHour(for: existingTasks)
+        if let parsedHour = parsed.hour {
+            selectedHour = parsedHour
+            selectedMinute = parsed.minute ?? 0
+        } else {
+            let searchStartHour = Calendar.current.isDateInToday(targetDate)
+                ? Calendar.current.component(.hour, from: Date())
+                : GridConfig.startHour
+            let slot = GridConfig.nextOpenSlot(for: existingTasks, from: searchStartHour, minute: 0)
+            selectedHour = slot.hour
+            selectedMinute = slot.minute
+        }
         phase = .reviewing
     }
 
@@ -119,11 +142,15 @@ struct VoiceEntryView: View {
         let title = editedTitle.trimmingCharacters(in: .whitespacesAndNewlines)
         let newTask = PlannerTask(
             title: title,
-            scheduledDate: Calendar.current.startOfDay(for: Date()),
-            startHour: selectedHour
+            scheduledDate: Calendar.current.startOfDay(for: targetDate),
+            startHour: selectedHour,
+            startMinute: selectedMinute
         )
         modelContext.insert(newTask)
         NotificationScheduler.reschedule(for: newTask)
+        // Save immediately rather than relying solely on SwiftData's implicit
+        // autosave — see the "Past crash" note in CLAUDE.md.
+        try? modelContext.save()
         dismiss()
     }
 }

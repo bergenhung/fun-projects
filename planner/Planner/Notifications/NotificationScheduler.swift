@@ -20,17 +20,15 @@ enum NotificationScheduler {
     }
 
     static func requestAuthorizationIfNeeded() {
-        let center = UNUserNotificationCenter.current()
-        center.getNotificationSettings { settings in
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
             guard settings.authorizationStatus == .notDetermined else { return }
-            center.requestAuthorization(options: [.alert, .sound, .badge]) { _, _ in }
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { _, _ in }
         }
     }
 
-    /// A task's nominal start instant: `startHour`:00 on `scheduledDate`. Hour-only,
-    /// matching the v1 data model (no minute-level placement in the grid).
+    /// A task's nominal start instant: `startHour`:`startMinute` on `scheduledDate`.
     static func startDate(for task: PlannerTask) -> Date? {
-        Calendar.current.date(bySettingHour: task.startHour, minute: 0, second: 0, of: task.scheduledDate)
+        Calendar.current.date(bySettingHour: task.startHour, minute: task.startMinute, second: 0, of: task.scheduledDate)
     }
 
     private static func reminderIdentifier(for task: PlannerTask) -> String {
